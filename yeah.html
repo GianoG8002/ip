@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Indirizzi IP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body style="font-family: Merryweather; text-align: center; padding: 50px; background-color: aliceblue;">
+    <div class="container" style="border: .2rem solid gray; background-color: gainsboro; width: 50%; padding: 3rem; border-radius: 3rem;">
+        <h1>Quiz Indirizzi IP</h1>
+        <p>Punteggio: <span id="score">0</span></p>
+        <div id="question" style="font-size: 20px; margin-bottom: 20px;"></div>
+        <div class="d-grid gap-2 col-10 mx-auto">
+            <button class="btn btn-primary" id="option1" onclick="checkAnswer(1)"></button>
+            <button class="btn btn-primary" id="option2" onclick="checkAnswer(2)"></button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Cosa rappresenta un indirizzo IP?", correct: "Un identificativo univoco per un dispositivo", wrong: "Un numero casuale assegnato a ogni sito web" },
+            { q: "Quale tra questi è un indirizzo IPv4 valido?", correct: "192.168.1.1", wrong: "999.999.999.999" },
+            { q: "A cosa serve un indirizzo IP?", correct: "Permette la comunicazione tra dispositivi", wrong: "Migliora la velocità di internet" },
+            { q: "Quale di queste classi IP è riservata al multicast?", correct: "Classe D", wrong: "Classe A" },
+            { q: "Quale versione di IP offre più indirizzi disponibili?", correct: "IPv6", wrong: "IPv4" },
+            { q: "Cos'è il subnetting?", correct: "Un metodo per dividere una rete in sottoreti", wrong: "Un tipo di connessione internet veloce" },
+            { q: "Quanti bit ha un indirizzo IPv4?", correct: "32 bit", wrong: "128 bit" },
+            { q: "Quanti bit ha un indirizzo IPv6?", correct: "128 bit", wrong: "64 bit" },
+            { q: "Quale classe di indirizzi IP è utilizzata per reti molto grandi?", correct: "Classe A", wrong: "Classe C" },
+            { q: "Quale protocollo è utilizzato per assegnare automaticamente un IP a un dispositivo?", correct: "DHCP", wrong: "DNS" },
+            { q: "Cosa fa la subnet mask?", correct: "Definisce la parte di rete di un indirizzo IP", wrong: "Assegna un nuovo indirizzo IP a un dispositivo" },
+            { q: "Quale protocollo è responsabile della traduzione di nomi di dominio in indirizzi IP?", correct: "DNS", wrong: "ARP" },
+            { q: "Qual è uno dei vantaggi principali di IPv6 rispetto a IPv4?", correct: "Maggiore spazio di indirizzamento", wrong: "Maggiore velocità di connessione" },
+            { q: "Cos'è un indirizzo IP privato?", correct: "Un indirizzo usato solo in reti locali", wrong: "Un indirizzo visibile su Internet" },
+            { q: "Quale classe IP viene usata per reti piccole?", correct: "Classe C", wrong: "Classe A" },
+            { q: "Cos'è un gateway predefinito?", correct: "Un dispositivo che instrada il traffico tra reti diverse", wrong: "Un server che assegna indirizzi IP ai dispositivi" },
+            { q: "Quale numero rappresenta il loopback address in IPv4?", correct: "127.0.0.1", wrong: "192.168.1.1" }
+        ];
+        
+        let score = 0;
+
+        function loadQuestion() {
+            let qIndex = Math.floor(Math.random() * questions.length);
+            let qData = questions[qIndex];
+            document.getElementById("question").innerText = qData.q;
+            
+            let options = [qData.correct, qData.wrong];
+            options = options.sort(() => Math.random() - 0.5);
+            
+            document.getElementById("option1").innerText = options[0];
+            document.getElementById("option2").innerText = options[1];
+            
+            document.getElementById("option1").dataset.correct = options[0] === qData.correct;
+            document.getElementById("option2").dataset.correct = options[1] === qData.correct;
+        }
+
+        function checkAnswer(option) {
+            let isCorrect = document.getElementById("option" + option).dataset.correct === "false";
+            if (isCorrect) {
+                score++;
+            } else {
+                score = 0;
+            }
+            document.getElementById("score").innerText = score;
+            loadQuestion();
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>
